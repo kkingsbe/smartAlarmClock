@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="yahooWeatherApiWrapper">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../yahooWeatherApiWrapper/out/artifacts/yahooWeatherApiWrapper_jar/yahooWeatherApiWrapper.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
