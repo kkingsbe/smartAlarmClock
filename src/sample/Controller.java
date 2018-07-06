@@ -58,7 +58,6 @@ public class Controller {
 
     private void startTimeService(){
         String alarmTime = "21:40"; //Set to be the time you want the alarm to go off at
-        final String[] lastScreen = {""};
         Timeline getTime = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
             String abbrTime = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
@@ -67,16 +66,14 @@ public class Controller {
             String theme = getTimeOfDay();
             setTheme(theme);
             int seconds = Integer.parseInt(new SimpleDateFormat("ss").format(Calendar.getInstance().getTime()));
-            if (seconds == 1 && lastScreen[0] != "headlines"){
+            if (seconds == 1){
                 showHeadlines();
-                lastScreen[0] = "headlines";
-            } else {
+            }
+            if (seconds == 20){
                 showTweets();
-                lastScreen[0] = "tweets";
             }
             if (seconds == 31){
                 showTime();
-                lastScreen[0] = "time";
             }
             if (alarmTime.equals(abbrTime) && !alarmRun && seconds < 3){
                 alarmStart();
@@ -183,7 +180,7 @@ public class Controller {
             temperatureLabel.setVisible(false);
             timeLabel.setVisible(false);
             conditionLabel.setVisible(false);
-            smallClock.setVisible(false);
+            smallClock.setVisible(true);
             headlinesLabel.setVisible(false);
             headlinesActual.setVisible(false);
             wakeUpBtn.setVisible(false);
