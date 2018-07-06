@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="org.twitter4j:twitter4j-appengine:4.0.3" type="repository">
+    <properties maven-id="org.twitter4j:twitter4j-appengine:4.0.3" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/twitter4j/twitter4j-core/4.0.3/twitter4j-core-4.0.3.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/appengine/appengine-api-1.0-sdk/1.8.7/appengine-api-1.0-sdk-1.8.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

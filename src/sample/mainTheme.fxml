@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -71,7 +70,7 @@
                   <Font name="MyriadPro-Regular" size="150.0" />
                </font>
             </Label>
-            <Label fx:id="conditionLabel" layoutX="24.0" layoutY="94.0" prefHeight="56.0" prefWidth="561.0" text="Cloudy With a Chance of Meatballs" textFill="WHITE">
+            <Label fx:id="conditionLabel" layoutX="24.0" layoutY="94.0" prefHeight="56.0" prefWidth="561.0" text="Cloudy" textFill="WHITE">
                <font>
                   <Font size="37.0" />
                </font>
@@ -101,6 +100,16 @@
                   <Font size="48.0" />
                </font>
             </Button>
+            <Label fx:id="trendingOnTwitterTitle" layoutX="223.0" layoutY="33.0" text="Trending on Twitter" textFill="WHITE" visible="false">
+               <font>
+                  <Font size="41.0" />
+               </font>
+            </Label>
+            <Label fx:id="twitterTrending" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="91.0" layoutY="122.0" prefHeight="357.0" prefWidth="619.0" text="Top on twitter" textAlignment="CENTER" textFill="WHITE" visible="false">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

@@ -18,11 +18,16 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
+/*
 import javax.speech.*;
 import java.util.*;
 import javax.speech.synthesis.*;
+*/
 
 import com.kkingsbe.yahooweatherapi.yahooWeather;
+import twitter4j.*;
+import twitter4j.conf.ConfigurationBuilder;
 
 public class Controller {
     public Label timeLabel;
@@ -38,6 +43,8 @@ public class Controller {
     public int numHeadlines = 5;
     public Button wakeUpBtn;
     public Boolean alarmRun = false;
+    public Label twitterTrending;
+    public Label trendingOnTwitterTitle;
     String bip = "Resources/Sounds/Cool-alarm-tone-notification-sound.mp3";
     Media hit = new Media(new File(bip).toURI().toString());
     public MediaPlayer mediaPlayer = new MediaPlayer(hit);
@@ -46,10 +53,12 @@ public class Controller {
         startTimeService();
         startWeatherService();
         startNewsService();
+        startTweetService();
     }
 
     private void startTimeService(){
         String alarmTime = "21:40"; //Set to be the time you want the alarm to go off at
+        final String[] lastScreen = {""};
         Timeline getTime = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
             String abbrTime = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
@@ -58,11 +67,16 @@ public class Controller {
             String theme = getTimeOfDay();
             setTheme(theme);
             int seconds = Integer.parseInt(new SimpleDateFormat("ss").format(Calendar.getInstance().getTime()));
-            if (seconds == 1){
+            if (seconds == 1 && lastScreen[0] != "headlines"){
                 showHeadlines();
+                lastScreen[0] = "headlines";
+            } else {
+                showTweets();
+                lastScreen[0] = "tweets";
             }
             if (seconds == 31){
                 showTime();
+                lastScreen[0] = "time";
             }
             if (alarmTime.equals(abbrTime) && !alarmRun && seconds < 3){
                 alarmStart();
@@ -143,6 +157,8 @@ public class Controller {
             headlinesActual.setVisible(false);
             headlinesLabel.setVisible(false);
             wakeUpBtn.setVisible(false);
+            twitterTrending.setVisible(false);
+            trendingOnTwitterTitle.setVisible(false);
         }
     }
 
@@ -156,6 +172,23 @@ public class Controller {
             headlinesLabel.setVisible(true);
             headlinesActual.setVisible(true);
             wakeUpBtn.setVisible(false);
+            twitterTrending.setVisible(false);
+            trendingOnTwitterTitle.setVisible(false);
+        }
+    }
+
+    private void showTweets(){
+        if (!alarmRun) {
+            headlinesLabel.setVisible(false);
+            temperatureLabel.setVisible(false);
+            timeLabel.setVisible(false);
+            conditionLabel.setVisible(false);
+            smallClock.setVisible(false);
+            headlinesLabel.setVisible(false);
+            headlinesActual.setVisible(false);
+            wakeUpBtn.setVisible(false);
+            twitterTrending.setVisible(true);
+            trendingOnTwitterTitle.setVisible(true);
         }
     }
 
@@ -179,7 +212,7 @@ public class Controller {
             }
             headlinesActual.setText(headlines);
         }),
-                new KeyFrame(Duration.seconds(60*10))
+                new KeyFrame(Duration.seconds(60))
         );
         getNews.setCycleCount(Animation.INDEFINITE);
         getNews.play();
@@ -202,5 +235,39 @@ public class Controller {
         mediaPlayer.stop();
         alarmRun = false;
         showHeadlines();
+    }
+
+    public void startTweetService(){
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(true)
+                .setOAuthConsumerKey("Qt4SPFsGLZVQJDLLTVless1Kg")
+                .setOAuthConsumerSecret("ioEv0Shad2rPq4IAUmFkpxe65vgBKEBf7zyldHdFQgzGl0TehU")
+                .setOAuthAccessToken("1015242795219595265-hNiMtQFbWD3RztOX08Co9UHzcrZdDS")
+                .setOAuthAccessTokenSecret("bKok65AmkHsUknOW6bPQkFXgIOvV6L2B8oZhHz0a2fc7K");
+        TwitterFactory tf = new TwitterFactory(cb.build());
+        Twitter twitter = tf.getInstance();
+        Timeline getTweets = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            String trendingHashTags = "";
+            ResponseList<Location> locations = null;
+            try {
+                locations = twitter.getAvailableTrends();
+            } catch (TwitterException e1) {
+                e1.printStackTrace();
+            }
+            System.out.println("Showing available trends");
+            try {
+                Trends trends = twitter.getPlaceTrends(23424977);
+                for (int i = 0; i < trends.getTrends().length; i++) {
+                    trendingHashTags += trends.getTrends()[i].getName() + "\n" + "\n";
+                }
+            } catch (twitter4j.TwitterException e2){
+                e2.printStackTrace();
+            }
+            twitterTrending.setText(trendingHashTags);
+        }),
+                new KeyFrame(Duration.seconds(60))
+        );
+        getTweets.setCycleCount(Animation.INDEFINITE);
+        getTweets.play();
     }
 }

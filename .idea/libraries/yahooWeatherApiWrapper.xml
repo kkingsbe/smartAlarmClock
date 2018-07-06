@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="yahooWeatherApiWrapper">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../yahooWeatherApiWrapper/out/artifacts/yahooWeatherApiWrapper_jar/yahooWeatherApiWrapper.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/yahooWeatherApiWrapper.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
